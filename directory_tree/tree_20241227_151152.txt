@@ -1,0 +1,90 @@
+langchain_sql/
+├── .env.example
+├── .gitignore
+├── app.log
+├── config
+│   └── config.py
+├── csv_loader.log
+├── data
+│   ├── ReportePCBienes202201.csv
+│   ├── ReportePCBienes202202.csv
+│   ├── ReportePCBienes202203.csv
+│   ├── ReportePCBienes202204.csv
+│   ├── ReportePCBienes202205.csv
+│   ├── ReportePCBienes202206.csv
+│   ├── ReportePCBienes202207.csv
+│   ├── ReportePCBienes202208.csv
+│   ├── ReportePCBienes202209.csv
+│   ├── ReportePCBienes202210.csv
+│   ├── ReportePCBienes202211.csv
+│   ├── ReportePCBienes202212.csv
+│   ├── ReportePCBienes202301.csv
+│   ├── ReportePCBienes202302.csv
+│   ├── ReportePCBienes202303.csv
+│   ├── ReportePCBienes202304.csv
+│   ├── ReportePCBienes202305.csv
+│   ├── ReportePCBienes202306.csv
+│   ├── ReportePCBienes202307.csv
+│   ├── ReportePCBienes202308.csv
+│   ├── ReportePCBienes202309.csv
+│   ├── ReportePCBienes202310.csv
+│   ├── ReportePCBienes202311.csv
+│   ├── ReportePCBienes202312.csv
+│   ├── ReportePCBienes202401.csv
+│   ├── ReportePCBienes202402.csv
+│   ├── ReportePCBienes202403.csv
+│   ├── ReportePCBienes202404.csv
+│   ├── ReportePCBienes202405.csv
+│   ├── ReportePCBienes202406.csv
+│   ├── ReportePCBienes202407.csv
+│   ├── ReportePCBienes202408.csv
+│   ├── ReportePCBienes202409.csv
+│   ├── ReportePCBienes202410.csv
+│   └── ReportePCBienes202411.csv
+├── data_loader.log
+├── docs
+│   ├── Diccionario_Datos_Bienes.pdf
+│   └── time_series_handling.md
+├── logs
+│   ├── app.log
+│   ├── chatbot.log
+│   ├── data_processing.log
+│   ├── database.log
+│   ├── query_interface.log
+│   ├── rag_service.log
+│   └── visualization.log
+├── readme.md
+├── requirements.txt
+├── scripts
+│   ├── generate_requirements.py
+│   ├── mysql
+│   │   ├── clean_csv.py
+│   │   ├── csv_diagnostic.py
+│   │   ├── init_db.py
+│   │   ├── load-backup.py
+│   │   ├── load.py
+│   │   ├── load_universal.py
+│   │   ├── mysql_check.py
+│   │   └── test_load.py
+│   └── setup.py
+├── src
+│   ├── components
+│   │   ├── debug_panel.py
+│   │   ├── history_view.py
+│   │   ├── query_interface.py
+│   │   └── visualization.py
+│   ├── layouts
+│   │   ├── footer.py
+│   │   └── header.py
+│   ├── pages
+│   │   └── Home.py
+│   ├── services
+│   │   ├── data_processing.py
+│   │   ├── rag_service.py
+│   │   └── state_management.py
+│   └── utils
+│       ├── chatbot.py
+│       ├── database.py
+│       ├── llm_provider.py
+│       └── rag_utils.py
+└── test_load.log
