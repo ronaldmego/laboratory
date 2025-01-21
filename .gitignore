@@ -17,6 +17,8 @@ env_ai/
 **/mfs-data-reports*
 **/Data-Scientist-Test*
 **/.Rproj.user*
+**/auxiliar*
+**/download*
 *.pem
 *.log
 *.pyc
@@ -31,6 +33,8 @@ project_telco_analytics.md
 .env
 .env.*
 !.env.example
+credentials.json
+token.pickle
 
 # Python
 __pycache__/
