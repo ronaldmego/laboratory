@@ -1,0 +1,1307 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+library(reticulate)
+```
+instalaciones de python que tengo
+```{r}
+conda_list()
+```
+
+```{r}
+#use_python("D:\\Temporal\\Anaconda\\python.exe",required = TRUE)
+```
+
+```{r}
+py_config()
+```
+
+
+```{python}
+import numpy as np
+import pandas as pd
+```
+
+```{python}
+help(pd.Series)
+```
+
+
+```{python}
+numbers = [1, 2, 3]
+pd.Series(numbers)
+```
+
+```{python}
+animals = ['Tiger', 'Bear', 'Moose']
+pd.Series(animals)
+```
+
+
+```{python}
+numbers = [1, 2, 3]
+pd.Series(numbers)
+```
+
+```{python}
+animals = ['Tiger', 'Bear', None]
+pd.Series(animals)
+```
+
+
+```{python}
+np.nan == None
+np.nan == np.nan
+np.isnan(np.nan)
+```
+
+```{python}
+sports = {'Archery': 'Bhutan',
+          'Golf': 'Scotland',
+          'Sumo': 'Japan',
+          'Taekwondo': 'South Korea'}
+s = pd.Series(sports)
+s
+```
+
+
+```{python}
+s.index
+```
+
+
+```{python}
+s = pd.Series(['Tiger', 'Bear', 'Moose'], index=['India', 'America', 'Canada'])
+s
+```
+
+
+```{python}
+sports = {'Archery': 'Bhutan',
+          'Golf': 'Scotland',
+          'Sumo': 'Japan',
+          'Taekwondo': 'South Korea'}
+s = pd.Series(sports, index=['Golf', 'Sumo', 'Hockey'])
+s
+```
+Querying a Series
+```{python}
+sports = {'Archery': 'Bhutan',
+          'Golf': 'Scotland',
+          'Sumo': 'Japan',
+          'Taekwondo': 'South Korea'}
+s = pd.Series(sports)
+s
+```
+
+
+```{python}
+s.iloc[3]
+s.loc['Golf']
+s[3]
+s['Golf']
+```
+
+
+```{python}
+sports = {99: 'Bhutan',
+          100: 'Scotland',
+          101: 'Japan',
+          102: 'South Korea'}
+s = pd.Series(sports)
+```
+
+```{python}
+s[0] #This won't call s.iloc[0] as one might expect, it generates an error instead
+```
+
+
+```{python}
+s = pd.Series([100.00, 120.00, 101.00, 3.00])
+type(s)
+```
+
+
+```{python}
+total = 0
+for item in s:
+    total=total+item
+print(total)
+```
+
+
+```{python}
+total = np.sum(s)
+print(total)
+```
+#this creates a big series of random numbers
+
+```{python}
+s1 = pd.Series(np.random.randint(0,1000,10000))
+s1.head()
+```
+
+```{python}
+len(s1)
+```
+```{python}
+summary = 0
+for item in s1:
+    summary=summary+item
+summary
+```
+
+
+```{python}
+summary = np.sum(s1)
+summary
+```
+
+```{python}
+s = pd.Series([1, 2, 3])
+s.loc['Animal'] = 'Bears'
+s
+```
+
+```{python}
+original_sports = pd.Series({'Archery': 'Bhutan',
+                             'Golf': 'Scotland',
+                             'Sumo': 'Japan',
+                             'Taekwondo': 'South Korea'})
+cricket_loving_countries = pd.Series(['Australia',
+                                      'Barbados',
+                                      'Pakistan',
+                                      'England'], 
+                                   index=['Cricket',
+                                          'Cricket',
+                                          'Cricket',
+                                          'Cricket'])
+all_countries = original_sports.append(cricket_loving_countries)
+```
+
+
+```{python}
+original_sports
+cricket_loving_countries
+all_countries
+all_countries.loc['Cricket']
+```
+
+
+#***The DataFrame Data Structure***
+
+```{python}
+purchase_1 = pd.Series({'Name': 'Chris',
+                        'Item Purchased': 'Dog Food',
+                        'Cost': 22.50})
+purchase_2 = pd.Series({'Name': 'Kevyn',
+                        'Item Purchased': 'Kitty Litter',
+                        'Cost': 2.50})
+purchase_3 = pd.Series({'Name': 'Vinod',
+                        'Item Purchased': 'Bird Seed',
+                        'Cost': 5.00})
+df = pd.DataFrame([purchase_1, purchase_2, purchase_3], index=['Store 1', 'Store 1', 'Store 2'])
+df.head()
+```
+
+```{python}
+df['Item Purchased']
+print('\n')
+df.loc['Store 2']
+print('\n')
+type(df.loc['Store 2'])
+print('\n')
+df.loc['Store 1']
+print('\n')
+df.loc['Store 1', 'Cost']
+```
+
+
+```{python}
+df.T
+print('\n')
+df.T.loc['Cost']
+print('\n')
+df['Cost']
+print('\n')
+df.loc[:,['Name', 'Cost']]
+print('\n')
+```
+#notar que no borra
+```{python}
+df
+print('\n')
+df.drop('Store 1')
+print('\n')
+df
+```
+
+#se recomienda hacer una copia con la funcion copy y luego borrar
+```{python}
+copy_df = df.copy()
+copy_df
+print('\n')
+copy_df = copy_df.drop('Store 1')
+copy_df
+```
+
+
+```{python}
+del copy_df['Name']
+copy_df
+```
+#agrega una columa
+```{python}
+df['Location'] = None
+print('\n')
+df
+```
+
+#actualiza el valor multiplicandolo por 0.8
+```{python}
+df['Cost'] *= 0.8
+print(df)
+```
+#**Dataframe Indexing and Loading**
+```{python}
+costs = df['Cost']
+costs
+```
+
+```{python}
+costs+=2
+costs
+```
+
+```{python}
+df
+```
+
+```{python}
+df = pd.read_csv('olympics.csv')
+df.head()
+```
+
+```{python}
+df = pd.read_csv('olympics.csv', index_col = 0, skiprows=1)
+df.head()
+```
+
+```{python}
+for col in df.columns:
+    if col[:2]=='01':
+        df.rename(columns={col:'Gold' + col[4:]}, inplace=True)
+    if col[:2]=='02':
+        df.rename(columns={col:'Silver' + col[4:]}, inplace=True)
+    if col[:2]=='03':
+        df.rename(columns={col:'Bronze' + col[4:]}, inplace=True)
+    if col[:1]=='№':
+        df.rename(columns={col:'#' + col[1:]}, inplace=True) 
+
+df.head()
+df.shape
+```
+#***Querying a DataFrame***
+
+#verifica cuales cumplen la condicion
+```{python}
+df['Gold'] > 0
+```
+#muestra solo los que cumplen la condicion y los demas salen como NaN
+```{python}
+only_gold = df.where(df['Gold'] > 0)
+only_gold.head()
+only_gold.shape
+```
+
+```{python}
+only_gold['Gold'].count()
+#print('\n')
+df['Gold'].count()
+```
+
+
+#elimina las filas con NaN
+```{python}
+only_gold.shape
+only_gold = only_gold.dropna()
+only_gold.head()
+only_gold.shape #len(only_gold)
+```
+#otra forma, directo sin nan
+```{python}
+only_gold = df[df['Gold'] > 0]
+only_gold.head()
+len(only_gold)
+```
+
+```{python}
+#len(df[(df['Gold'] > 0) | (df['Gold.1'] > 0)])
+aux=df[(df['Gold'] > 0) | (df['Gold.1'] > 0)]
+aux.head()
+only_gold.shape
+```
+#un slice del df de 6 filas y todas las columnas
+```{python}
+aux.iloc[3:9,:]
+aux.iloc[3:9,:].shape
+```
+
+```{python}
+df[(df['Gold.1'] > 0) & (df['Gold'] == 0)]
+```
+
+
+```{python}
+purchase_1 = pd.Series({'Name': 'Chris',
+                        'Item Purchased': 'Dog Food',
+                        'Cost': 22.50})
+purchase_2 = pd.Series({'Name': 'Kevyn',
+                        'Item Purchased': 'Kitty Litter',
+                        'Cost': 2.50})
+purchase_3 = pd.Series({'Name': 'Vinod',
+                        'Item Purchased': 'Bird Seed',
+                        'Cost': 5.00})
+
+rt = pd.DataFrame([purchase_1, purchase_2, purchase_3], index=['Store 1', 'Store 1', 'Store 2'])
+rt
+```
+
+```{python}
+# los que pagaron mas de $3
+qt=rt[rt['Cost']>3]
+qt
+```
+#**Indexing Dataframes**
+```{python}
+df.head()
+```
+#grabando el indice actual 'country' como variable y creando el nuevo indice 'gold'
+```{python}
+df['country'] = df.index
+df = df.set_index('Gold')
+df.head()
+```
+#reseteando el indice
+```{python}
+df = df.reset_index()
+df.head()
+```
+
+```{python}
+df = pd.read_csv('census.csv')
+df.head()
+```
+
+```{python}
+df['SUMLEV'].unique()
+```
+
+```{python}
+df=df[df['SUMLEV'] == 50]
+df.head()
+```
+
+```{python}
+columns_to_keep = ['STNAME',
+                   'CTYNAME',
+                   'BIRTHS2010',
+                   'BIRTHS2011',
+                   'BIRTHS2012',
+                   'BIRTHS2013',
+                   'BIRTHS2014',
+                   'BIRTHS2015',
+                   'POPESTIMATE2010',
+                   'POPESTIMATE2011',
+                   'POPESTIMATE2012',
+                   'POPESTIMATE2013',
+                   'POPESTIMATE2014',
+                   'POPESTIMATE2015']
+df = df[columns_to_keep]
+df.head()
+```
+
+```{python}
+df = df.set_index(['STNAME', 'CTYNAME'])
+df.head()
+```
+
+```{python}
+df.loc['Michigan', 'Washtenaw County']
+```
+
+```{python}
+df.loc[ [('Michigan', 'Washtenaw County'),
+         ('Michigan', 'Wayne County')] ]
+```
+
+```{python}
+# Reindex the purchase records DataFrame to be indexed hierarchically, first by store, then by person. 
+# Name these indexes 'Location' and 'Name'. Then add a new entry to it with the value of:
+
+# Name: 'Kevyn', Item Purchased: 'Kitty Food', Cost: 3.00 Location: 'Store 2'.
+
+purchase_1 = pd.Series({'Name': 'Chris',
+                        'Item Purchased': 'Dog Food',
+                        'Cost': 22.50})
+purchase_2 = pd.Series({'Name': 'Kevyn',
+                        'Item Purchased': 'Kitty Litter',
+                        'Cost': 2.50})
+purchase_3 = pd.Series({'Name': 'Vinod',
+                        'Item Purchased': 'Bird Seed',
+                        'Cost': 5.00})
+
+t = pd.DataFrame([purchase_1, purchase_2, purchase_3], index=['Store 1', 'Store 1', 'Store 2'])
+
+q =t.copy()
+
+t
+# Your answer here
+```
+
+```{python}
+t['Location'] = t.index
+t = t.set_index(['Location', 'Name'])
+t.head()
+```
+
+
+```{python}
+t = t.append(pd.Series(data={'Cost': 3.00, 'Item Purchased': 'Kitty Food'}, name=('Store 2', 'Kevyn')))
+t.head()
+```
+
+```{python}
+#opcion2
+q = q.set_index([q.index, 'Name'])
+q.index.names = ['Location', 'Name']
+q = q.append(pd.Series(data={'Cost': 3.00, 'Item Purchased': 'Kitty Food'}, name=('Store 2', 'Kevyn')))
+q.head()
+```
+#***Missing values***
+
+```{python}
+df = pd.read_csv('log.csv')
+df.head()
+```
+
+```{python}
+df = df.set_index('time')
+df = df.sort_index()
+df.head()
+```
+
+
+```{python}
+df = df.reset_index()
+df = df.set_index(['time', 'user'])
+df.head()
+```
+#metodo para llenar vacios
+```{python}
+df = df.fillna(method='ffill')
+df.head()
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+```{python}
+
+```
+
+```{python}
+
+```

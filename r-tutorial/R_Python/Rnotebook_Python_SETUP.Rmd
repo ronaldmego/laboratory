@@ -1,0 +1,51 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# https://anderfernandez.com/blog/reticulate-usar-python-en-r/
+# https://stackoverflow.com/questions/52741484/how-to-import-pandas-using-r-studio
+
+
+```{r}
+library(reticulate)
+```
+
+instalaciones de python que tengo
+```{r}
+conda_list()
+```
+
+#para elegir el exe de pyhton que esta en el ambiente r-tf
+```{r}
+use_condaenv("r-tf")
+```
+
+#otra forma de especificar el exe de python a usar.
+```{r}
+use_python("D:\\Temporal\\Anaconda\\envs\\r-tf\\python.exe",required = TRUE)
+#use_python("D:\\Temporal\\Anaconda\\python.exe",required = TRUE)
+```
+
+#para ver que directorio de python estoy usando
+```{r}
+py_config()
+```
+
+#para instalar paquetes de python, en ambiente virtual "R-TF"
+```{r}
+use_condaenv("r-tf")   
+conda_install("r-tf",c('SciPy'), pip = TRUE)
+conda_install("r-tf",c('pandas'), pip = TRUE)
+```
+#otra forma de instalar paquetes de python, en ambiente virtual "reticulate"
+```{r}
+##se_condaenv("reticulate")   
+#conda_install("reticulate",c('keras','tensorflow'), pip = TRUE)
+#conda_install("reticulate",c('pillow'), pip = TRUE)
+```
+
+#otra forma de instalar paquetes de python modo general
+```{r}
+#py_install("pandas")
+```

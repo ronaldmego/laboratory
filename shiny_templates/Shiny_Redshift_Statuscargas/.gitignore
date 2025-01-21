@@ -1,0 +1,24 @@
+# Ignore environment variable files
+*.env
+
+# Ignore R history files
+.Rhistory
+
+# Ignore RStudio project user files
+.Rproj.user
+.RData
+
+# Ignore specific R file
+server-template.R
+
+# Ignore any folder named "temp" and its contents
+temp/
+rsconnect/
+aws/
+venvr/
+
+# Ignore any files starting with "example"
+example*
+
+# Ignore any files starting with "back"
+back*

@@ -1,0 +1,40 @@
+% test-gantt.tex
+\documentclass[a4paper,landscape]{article}
+\usepackage{pgfgantt}
+\usepackage[landscape,margin=1cm]{geometry}
+
+\begin{document}
+
+\begin{ganttchart}[
+                hgrid,
+                vgrid,
+                time slot format=isodate,
+                expand chart=\textwidth,  % Ajusta automáticamente al ancho del texto
+                x unit=0.35cm, % Reducimos el tamaño de la unidad para Ajustar al ancho
+                %link/.style={-to, line width=1pt, draw=blue}
+                link/.style={-to,line width=1pt, draw=blue, rounded corners=1pt}
+            ]{2025-01-01}{2025-02-22}
+        \gantttitlecalendar{year, month=name, day, week, weekday} \\
+        % WBS 1
+        \ganttgroup{WBS 1: Planificación}{2025-01-03}{2025-01-24} \\
+        \ganttbar[name=tarea11]{Tarea 1.1}{2025-01-03}{2025-01-10} \\
+        \ganttbar[name=tarea12]{Tarea 1.2}{2025-01-03}{2025-01-17} \\
+        \ganttbar[name=tarea13]{Tarea 1.3}{2025-01-18}{2025-01-24} \\
+        \ganttmilestone[name=hito1]{Hito 1}{2025-01-24} \ganttnewline[thick, blue] %agrega division de color azul
+        % WBS 2
+        \ganttgroup{WBS 2: Ejecución}{2025-01-25}{2025-02-20} \\
+        \ganttbar[name=tarea21]{Tarea 2.1}{2025-01-25}{2025-02-05} \\
+        \ganttbar[name=tarea22]{Tarea 2.2}{2025-02-06}{2025-02-13} \\
+        \ganttbar[name=tarea23]{Tarea 2.3}{2025-02-14}{2025-02-20} \\
+        \ganttmilestone[name=hitofinal]{Hito Final}{2025-02-20}
+    
+        % Enlaces entre tareas WBS 1
+        \ganttlink[link type=s-s,link label={s$\to$s}]{tarea11}{tarea12} % Enlace con relacion start to start
+        \ganttlink{tarea12}{tarea13}
+        \ganttlink{tarea13}{hito1}
+        % Enlaces entre tareas WBS 2
+        \ganttlink{tarea21}{tarea22}
+        \ganttlink[link type=f-s,link label={f$\to$s}]{tarea22}{tarea23} % Enlace con relacion finish to start
+        \ganttlink{tarea23}{hitofinal}
+    \end{ganttchart}
+\end{document}

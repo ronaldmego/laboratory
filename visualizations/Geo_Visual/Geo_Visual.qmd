@@ -1,0 +1,142 @@
+---
+title: "Graph"
+format: html
+---
+
+```{r}
+#| echo: false
+#| results: 'hide'
+library(tidyverse)
+library(skimr)
+library(explore)
+```
+
+
+```{r}
+#| echo: false
+#| results: 'hide'
+#option directa
+data <- read_csv("~/APPs/MyAnalytics/Usefull_code/Geo_Visual/Data/Datos_abiertos_matriculas_2016_1_2024_1.csv")
+```
+
+```{r}
+print(data)
+```
+
+```{r}
+#| echo: false
+#| results: 'hide'
+Skim_results<-skimr::skim(data)
+```
+
+
+```{r}
+#| echo: false
+print(Skim_results)
+```
+
+Using expore
+```{r}
+data %>% explore::report(output_file = "report.html", output_dir = tempdir())
+```
+
+
+```{r}
+# Load the dplyr package
+library(dplyr)
+
+# Use group_by and summarise to count occurrences, then arrange by count descending
+result <-data %>%
+  group_by(COLEGIO_DEPA) %>%
+  summarise(Count = n(), .groups = 'drop') %>%
+  arrange(desc(Count))
+
+# View the result
+print(result, n=26)
+```
+
+
+```{r}
+library(sf)
+library(ggplot2)
+library(dplyr)
+library(tmap)
+library(leaflet)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(stringr)
+library(readr)
+```
+
+
+```{r}
+agg_data <- data %>%
+  group_by(COLEGIO_DEPA) %>%
+  summarise(student_count = n_distinct(IDHASH)) %>%
+  ungroup()
+```
+
+```{r}
+agg_data$COLEGIO_DEPA <- agg_data$COLEGIO_DEPA %>%
+  str_to_upper() %>%
+  str_replace_all("[Á]", "A") %>%
+  str_replace_all("[É]", "E") %>%
+  str_replace_all("[Í]", "I") %>%
+  str_replace_all("[Ó]", "O") %>%
+  str_replace_all("[Ú]", "U") %>%
+  str_replace_all("[Ü]", "U") %>%
+  str_replace_all("[Ñ]", "N") %>%
+  str_replace_all("[^A-Z ]", "")
+```
+
+
+```{r}
+peru <- ne_states(country = "Peru", returnclass = "sf")
+```
+
+
+```{r}
+peru$name <- peru$name %>%
+  str_to_upper() %>%
+  str_replace_all("[Á]", "A") %>%
+  str_replace_all("[É]", "E") %>%
+  str_replace_all("[Í]", "I") %>%
+  str_replace_all("[Ó]", "O") %>%
+  str_replace_all("[Ú]", "U") %>%
+  str_replace_all("[Ü]", "U") %>%
+  str_replace_all("[Ñ]", "N") %>%
+  str_replace_all("[^A-Z ]", "")
+```
+
+
+```{r}
+map_data <- peru %>%
+  left_join(agg_data, by = c("name" = "COLEGIO_DEPA"))
+```
+
+
+```{r}
+ggplot(map_data) +
+  geom_sf(aes(fill = student_count)) +
+  geom_text(aes(label = name, geometry = geometry), size = 3, stat = "sf_coordinates") +
+  scale_fill_viridis_c(option = "plasma") +
+  labs(title = "Number of Students by Department in Peru",
+       fill = "Student Count") +
+  theme_minimal()
+```
+
+
+```{r}
+leaflet(map_data) %>%
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  addPolygons(fillColor = ~colorQuantile("YlOrRd", student_count)(student_count),
+              color = "#BDBDC3",
+              weight = 1,
+              opacity = 1,
+              fillOpacity = 0.7,
+              highlightOptions = highlightOptions(color = "white", weight = 2, bringToFront = TRUE),
+              label = ~paste(name, "<br>", "Student Count:", student_count)) %>%
+  addLegend(pal = colorQuantile("YlOrRd", map_data$student_count), values = ~student_count,
+            opacity = 0.7, title = "Student Count",
+            position = "bottomright")
+```

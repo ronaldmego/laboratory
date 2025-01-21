@@ -1,0 +1,1 @@
+This is a demo of how to make a dashboard with Redshift data and Shiny for visuals.

@@ -1,0 +1,90 @@
+*.env
+env/
+env_ai/
+.venv/
+venv/
+env_ai/
+*.Renviron
+**/venvsl*
+**/venvsn*
+**/venvr*
+**/Backup*
+**/Data*
+**/data*
+**/rsconnect*
+**/temp*
+**/aws*
+**/mfs-data-reports*
+**/Data-Scientist-Test*
+**/.Rproj.user*
+*.pem
+*.log
+*.pyc
+*.csv
+*.xlsx
+__pycache__/
+.RData
+.Rhistory
+project_telco_analytics.md
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# Logs and data
+*.log
+logs/
+data/
+ref/
+!data/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# LaTeX
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Docker
+*.tar
+*.tar.gz
+
+# R log files
+/.quarto/
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Data files
+*.zip
+*.csv
+*.xlsx
+*.docx
+prompt.txt

@@ -1,0 +1,65 @@
+% test-gantt.tex
+\documentclass[a4paper,landscape]{article}
+\usepackage{pgfgantt}
+\usepackage[landscape,margin=1cm]{geometry}
+
+\begin{document}
+
+\begin{ganttchart}[
+                hgrid,
+                vgrid,
+                time slot format=isodate,
+                expand chart=\textwidth,
+                x unit=0.35cm,
+                link/.style={-to,line width=1pt, draw=blue, rounded corners=1pt},
+                % Configuración de la fecha actual
+                today=2025-01-15,
+                today rule/.style={draw=red, dashed, line width=1.5pt},
+                today label font=\small\bfseries,
+                today label node/.style={anchor=north west, font=\small\bfseries}
+            ]{2025-01-01}{2025-02-22}
+        \gantttitlecalendar{year, month=name, day, week, weekday} \\
+        % WBS 1
+        \ganttgroup[
+            progress=45, % Progreso del grupo
+            progress label node/.style={anchor=east,text=black}
+        ]{WBS 1: Planificación}{2025-01-03}{2025-01-24} \\
+        \ganttbar[
+            name=tarea11,  % Cambiado de tarea1.1 a tarea11
+            progress=100, % Tarea completada
+            bar/.style={fill=green!40},
+            bar incomplete/.style={fill=green!10}
+        ]{Tarea 1.1}{2025-01-03}{2025-01-10} \\
+        \ganttbar[
+            name=tarea12,  % Cambiado de tarea1.2 a tarea12
+            progress=60, % Tarea en progreso
+            bar/.style={fill=blue!40},
+            bar incomplete/.style={fill=blue!10}
+        ]{Tarea 1.2}{2025-01-03}{2025-01-17} \\
+        \ganttbar[
+            name=tarea13,  % Cambiado de tarea1.3 a tarea13
+            progress=0, % Tarea no iniciada
+            bar/.style={fill=gray!40},
+            bar incomplete/.style={fill=gray!10}
+        ]{Tarea 1.3}{2025-01-18}{2025-01-24} \\
+        \ganttmilestone[name=hito1]{Hito 1}{2025-01-24} \ganttnewline[thick, blue] %agrega division de color azul
+        % WBS 2
+        \ganttgroup[
+            progress=0, % Progreso del grupo
+            progress label node/.style={anchor=east,text=black}
+        ]{WBS 2: Ejecución}{2025-01-25}{2025-02-20} \\
+        \ganttbar[name=tarea21]{Tarea 2.1}{2025-01-25}{2025-02-05} \\
+        \ganttbar[name=tarea22]{Tarea 2.2}{2025-02-06}{2025-02-13} \\
+        \ganttbar[name=tarea23]{Tarea 2.3}{2025-02-14}{2025-02-20} \\
+        \ganttmilestone[name=hitofinal]{Hito Final}{2025-02-20}
+    
+        % Enlaces entre tareas - nombres actualizados
+        \ganttlink[link type=s-s,link label={s$\to$s}]{tarea11}{tarea12}
+        \ganttlink{tarea12}{tarea13}
+        \ganttlink{tarea13}{hito1}
+        \ganttlink{tarea21}{tarea22}
+        \ganttlink[link type=f-s,link label={f$\to$s}]{tarea22}{tarea23}
+        \ganttlink{tarea23}{hitofinal}
+    \end{ganttchart}
+
+\end{document}
