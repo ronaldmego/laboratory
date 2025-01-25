@@ -19,6 +19,7 @@ env_ai/
 **/.Rproj.user*
 **/auxiliar*
 **/download*
+**/ref*
 *.pem
 *.log
 *.pyc
