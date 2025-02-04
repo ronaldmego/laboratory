@@ -1,0 +1,61 @@
+\documentclass[a4paper,landscape]{article}
+\usepackage{pgfgantt}
+\usepackage[landscape,margin=1cm]{geometry}
+
+\definecolor{barblue}{RGB}{52,152,219}
+\definecolor{groupblue}{RGB}{41,128,185}
+\definecolor{linkred}{RGB}{231,76,60}
+
+\begin{document}
+
+\begin{ganttchart}[
+   hgrid={*1{draw=gray!20}},
+   vgrid={*1{draw=gray!20}},
+   time slot format=isodate,
+   expand chart=\textwidth,
+   x unit=0.18cm,
+   y unit title=0.5cm,
+   y unit chart=0.4cm,
+   link/.style={->, line width=1pt, draw=blue, rounded corners=2pt},
+   today=2025-02-03,
+   today rule/.style={draw=red!70, dashed, line width=1.5pt},
+   today label font=\tiny\bfseries\color{red!70},
+   title label font=\tiny,
+   title label node/.append style={
+       text=black,
+       font=\tiny,  % Reduce tamaño general
+       scale=0.6    % Escala adicional para días
+   },
+   group label font=\small\bfseries,
+   bar/.style={draw=black, fill=gray!40, rounded corners=2pt},
+   group/.style={draw=black, fill=groupblue!40},
+   calendar week text={W\currentweek}
+]{2024-10-25}{2025-04-10}
+   \gantttitlecalendar{year, month=shortname} \\
+   \gantttitlecalendar{week} \\
+   \gantttitlecalendar[
+      title label node/.append style={rotate=90}
+   ]{day} \\
+
+   \ganttgroup[progress=today]{WBS-0: Preliminary Project Diagnosis}{2024-11-01}{2024-12-14} \\
+   \ganttgroup[progress=today]{WBS-1: Data Quality Testing}{2024-12-15}{2024-12-22} \\
+   \ganttgroup[progress=today]{WBS-2: Data Transformation}{2024-12-23}{2025-01-02} \\
+   \ganttgroup[progress=today]{WBS-3: Data Exploration}{2025-01-03}{2025-01-14} \\
+   \ganttgroup[progress=today]{WBS-4: Data Preparation}{2025-01-15}{2025-01-26} \\
+   \ganttgroup[progress=today]{WBS-5: Data Modeling}{2025-01-27}{2025-02-17} \\
+   \ganttgroup[progress=today]{WBS-6: Data Model Testing}{2025-02-18}{2025-03-01} \\
+   \ganttgroup[progress=today]{WBS-7: Insights Review}{2025-03-02}{2025-03-13} \\
+   \ganttgroup[progress=today]{WBS-8: Deliverables}{2025-03-14}{2025-03-23} \\
+   \ganttgroup[progress=today]{WBS-9: Closing}{2025-03-24}{2025-04-04}
+
+   \ganttlink{elem0}{elem1}
+   \ganttlink{elem1}{elem2}
+   \ganttlink{elem2}{elem3}
+   \ganttlink{elem3}{elem4}
+   \ganttlink{elem4}{elem5}
+   \ganttlink{elem5}{elem6}
+   \ganttlink{elem6}{elem7}
+   \ganttlink{elem7}{elem8}
+   \ganttlink{elem8}{elem9}
+\end{ganttchart}
+\end{document}
